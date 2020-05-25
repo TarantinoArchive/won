@@ -1,0 +1,26 @@
+{
+  "name": "won",
+  "version": "1.0.0",
+  "description": "A new standard for Web Development",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "html",
+    "web",
+    "web",
+    "development",
+    "json",
+    "won",
+    "css"
+  ],
+  "author": "@GianlucaTarantino",
+  "license": "ISC",
+  "dependencies": {
+    "htmlparser2": "^4.1.0"
+  }
+}
