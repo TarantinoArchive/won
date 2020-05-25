@@ -7,6 +7,9 @@
     "test": "node index.js",
     "start": "node index.js"
   },
+  "bin": {
+    "won": "index.js"
+  },
   "keywords": [
     "js",
     "javascript",
