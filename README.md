@@ -1,6 +1,6 @@
 # WON
 ## Web Object Notation
-:::image type="content" source="assets/wonlogo.png" alt-text=" ":::
+![](/assets/wonlogo.png)
 ## What is WON? Why does it exists?
 Won is a multi purpose HTML to JSON (and vice-versa) converting tool. It is very useful for various applications in the field of web development, for example it helps a lot in web pages parsing and modification in some tedious languages like C, because all you have to do is use an easy JSON.
 I made WON because recently, while making a web scraping project with C++, I noticed that in languages like this is very difficult to get a code (and human) friendly representation of an HTML page.
