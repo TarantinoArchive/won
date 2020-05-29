@@ -32,6 +32,7 @@ if (process.argv.some((el) => el=="-hj")) {
     if (process.argv.some((el) => el=="-o")) {
         if (process.argv.length-1==process.argv.indexOf("-o")) {
             console.log("Wrong usage of -o. Type \"won --help\" for help.");
+            process.exit(0);
         }
         fileOutput = process.argv[process.argv.indexOf("-o")+1];
     }
@@ -99,6 +100,7 @@ else if (process.argv.some((el) => el=="-jh")) {
         if (process.argv.some((el) => el=="-o")) {
             if (process.argv.length-1==process.argv.indexOf("-o")) {
                 console.log("Wrong usage of -o. Type \"won --help\" for help.");
+                process.exit(0);
             }
             fileOutput = process.argv[process.argv.indexOf("-o")+1];
         }
@@ -197,7 +199,8 @@ else if (process.argv.some((el) => el=="-jh")) {
     // Checking if user want a custom output name
     if (process.argv.some((el) => el=="-o")) {
         if (process.argv.length-1==process.argv.indexOf("-o")) {
-            console.log("Wrong usage of -o. Type \"won -h\" for help.");
+            console.log("Wrong usage of -o. Type \"won --help\" for help.");
+            process.exit(0)
         }
         fileOutput = process.argv[process.argv.indexOf("-o")+1];
     }    
@@ -246,5 +249,44 @@ else if (process.argv.some((el) => el=="-jh")) {
         // Here I Parse and then Stringify the JSON for verifying and for the correct indentation
         if (err) throw err;
     }); 
+} else if (process.argv.some((el) => el=="-jc")) {
 
+    if (process.argv.length===3) {
+        console.log("Wrong usage of won. Type \"won --help\" for help.");
+        process.exit(0);
+    }
+
+    let fileToRead = process.argv[process.argv.indexOf("-jc")+1], fileOutput;
+
+    // Checking if user-specified file exists
+    fs.exists(fileToRead, exists => {
+        if (!exists) {
+            console.log("Error. No file in the specified path.");
+            process.exit(0);
+        }
+    });
+
+    // Checking if user want a custom output name
+    if (process.argv.some((el) => el=="-o")) {
+        if (process.argv.length-1==process.argv.indexOf("-o")) {
+            console.log("Wrong usage of -o. Type \"won --help\" for help.");
+            process.exit(0);
+        }
+        fileOutput = process.argv[process.argv.indexOf("-o")+1];
+    }    
+
+    let obj = JSON.parse(fs.readFileSync(fileToRead, "utf-8")), cssString = "";
+
+    for (key in obj) {
+        cssString += key + "{\n";
+        for (style in obj[key]) {
+            cssString += style + ": " + obj[key][style] + ";\n"
+        }
+        cssString += "}\n";
+    }
+
+    fs.writeFile(fileOutput ? fileOutput : "o.css", cssString, err => {
+        if (err) throw err;
+    })
+    
 }

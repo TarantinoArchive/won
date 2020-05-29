@@ -4,7 +4,7 @@
   "description": "A new standard for Web Development",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js",
+    "test": "node index.js -jc main.json -o main.css",
     "start": "node index.js"
   },
   "bin": {
