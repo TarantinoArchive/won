@@ -4,7 +4,7 @@
   "description": "A new standard for Web Development",
   "main": "won.js",
   "scripts": {
-    "test": "",
+    "test": "./.github/test/test.sh",
     "start": "node won.js"
   },
   "bin": {
