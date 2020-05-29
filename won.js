@@ -68,7 +68,7 @@ function JSONtoHTML(json) {
         else return indent + returnTag + ">\n";
     };
 
-    let obj = JSON.parse(json);
+    let obj = JSON.parse(JSON.stringify(json));
     let currentObj = obj;
     let indentSpaces = "", htmlBody = "";
     let oldObjs = [];
@@ -175,7 +175,7 @@ function CSStoJSON(cssStr) {
 */
 function JSONtoCSS(json) {
     let cssString = "";
-    json = JSON.parse(json);
+    json = JSON.parse(JSON.stringify(json));
 
     /*
         Here I just build a CSS string iterating through each child of each key,

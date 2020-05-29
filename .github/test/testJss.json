@@ -1,0 +1,15 @@
+{
+  "main ": {
+    "    background-attachment": " fixed"
+  },
+  ".main ": {
+    "    border-inline-end-width": " inherit",
+    "    display": " grid"
+  },
+  "div.main ": {
+    "    border": " inherit"
+  },
+  "#idlogo ": {
+    "    display": " grid"
+  }
+}
