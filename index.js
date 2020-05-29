@@ -10,7 +10,7 @@ if (process.argv.length<=2) {
 
 
 // Checking if user want to convert html to JSON
-if (process.argv.some((el) => el=="-h")) {
+if (process.argv.some((el) => el=="-hj")) {
 
     // In case user uses only "won -j"
     if (process.argv.length===3) {
@@ -18,7 +18,7 @@ if (process.argv.some((el) => el=="-h")) {
         process.exit(0);
     }
 
-    fileToRead = process.argv[process.argv.indexOf("-h")+1];
+    let fileToRead = process.argv[process.argv.indexOf("-hj")+1], fileOutput;
 
     // Checking if user-specified file exists
     fs.exists(fileToRead, exists => {
@@ -31,7 +31,7 @@ if (process.argv.some((el) => el=="-h")) {
     // Checking if user want a custom output name
     if (process.argv.some((el) => el=="-o")) {
         if (process.argv.length-1==process.argv.indexOf("-o")) {
-            console.log("Wrong usage of -o. Type \"won -h\" for help.");
+            console.log("Wrong usage of -o. Type \"won --help\" for help.");
         }
         fileOutput = process.argv[process.argv.indexOf("-o")+1];
     }
@@ -77,7 +77,7 @@ if (process.argv.some((el) => el=="-h")) {
     });
 } 
 // Checking if the user want to convert json to html
-else if (process.argv.some((el) => el=="-j")) {
+else if (process.argv.some((el) => el=="-jh")) {
 
         // In case user uses only "won -j"
         if (process.argv.length===3) {
@@ -85,7 +85,7 @@ else if (process.argv.some((el) => el=="-j")) {
             process.exit(0);
         }
     
-        fileToRead = process.argv[process.argv.indexOf("-j")+1];
+        let fileToRead = process.argv[process.argv.indexOf("-jh")+1], fileOutput;
     
         // Checking if user-specified file exists
         fs.exists(fileToRead, exists => {
@@ -177,4 +177,74 @@ else if (process.argv.some((el) => el=="-j")) {
     fs.writeFile(fileOutput ? fileOutput : "o.html", htmlBody, err => {
         if (err) throw err;
     });
+} else if (process.argv.some((el) => el=="-cj")) {
+
+    if (process.argv.length===3) {
+        console.log("Wrong usage of won. Type \"won --help\" for help.");
+        process.exit(0);
+    }
+
+    let fileToRead = process.argv[process.argv.indexOf("-cj")+1], fileOutput;
+
+    // Checking if user-specified file exists
+    fs.exists(fileToRead, exists => {
+        if (!exists) {
+            console.log("Error. No file in the specified path.");
+            process.exit(0);
+        }
+    });
+
+    // Checking if user want a custom output name
+    if (process.argv.some((el) => el=="-o")) {
+        if (process.argv.length-1==process.argv.indexOf("-o")) {
+            console.log("Wrong usage of -o. Type \"won -h\" for help.");
+        }
+        fileOutput = process.argv[process.argv.indexOf("-o")+1];
+    }    
+
+    cssStr = fs.readFileSync(fileToRead, "utf-8")
+
+    var temp="";
+    var openBraces=0;
+    for(var i=0; i<cssStr.length; i++){
+        var c = cssStr[i];
+        if (c == "{") {
+            openBraces++;
+        }
+        else if (c == "}") {
+            openBraces--;
+        }
+        if (openBraces == 0 && c == ":") {
+            temp += "_--_";
+        } else {
+            temp += c;
+        }
+    }
+    cssStr=temp;
+    cssStr=cssStr.split("\"").join("'");
+    cssStr=cssStr.split(" ").join("_SPACE_");
+    cssStr=cssStr.split("\r").join("");
+    cssStr=cssStr.split("\n").join("");
+    cssStr=cssStr.split("\t").join("");
+    cssStr=cssStr.split("}").join("\"}####\"");
+    cssStr=cssStr.split(";\"").join("\"");
+    cssStr=cssStr.split(":").join("\":\"");
+    cssStr=cssStr.split("{").join("\":{\"");
+    cssStr=cssStr.split(";").join("\",\"");
+    cssStr=cssStr.split("####").join(",");
+    cssStr=cssStr.split("_--_").join(":");
+    cssStr=cssStr.split("_SPACE_").join(" ");
+    if (cssStr.endsWith(",")) {
+        cssStr = cssStr.substr(0, cssStr.length-1);
+    }
+    if (cssStr.endsWith(",\"")) {
+        cssStr = cssStr.substr(0, cssStr.length-2);
+    }
+    cssStr = "{\""+cssStr+"}";
+
+    fs.writeFile(fileOutput ? fileOutput : "o.json", JSON.stringify(JSON.parse(cssStr), null, 2), err => {
+        // Here I Parse and then Stringify the JSON for verifying and for the correct indentation
+        if (err) throw err;
+    }); 
+
 }
