@@ -1,5 +1,11 @@
 const htmlparser2 = require("htmlparser2");
 
+/*
+    Function to generate a JSON string from a HTML string
+
+    @param html: a valid HTML document
+    @return: JSON string (WON-formatted) corresponding to that JSON
+*/
 function HTMLtoJSON(html) {
     let openedTags = [];
     let structure = {}, openTagStructure = {};
@@ -35,6 +41,12 @@ function HTMLtoJSON(html) {
     return JSON.stringify(structure, null, 2);
 }
 
+/*
+    Function to generate an HTML string from a WON-formatted JSON
+
+    @param json: a JSON (WON-formatted) object or string
+    @return: HTML string corresponding to that JSON
+*/
 function JSONtoHTML(json) {
 
     /*
@@ -56,7 +68,7 @@ function JSONtoHTML(json) {
         else return indent + returnTag + ">\n";
     };
 
-    let obj = json;
+    let obj = JSON.parse(json);
     let currentObj = obj;
     let indentSpaces = "", htmlBody = "";
     let oldObjs = [];
@@ -109,8 +121,14 @@ function JSONtoHTML(json) {
     
 }
 
-function CSStoJSON(cssstring) {
-    let cssStr = fs.readFileSync(fileToRead, "utf-8"), temp = "", openBraces = 0;
+/*
+    Function to generate an HTML string from a WON-formatted JSON
+
+    @param cssStr: a valid CSS document
+    @return: JSON string (WON-formatted) corresponding to the cssStr passed
+*/
+function CSStoJSON(cssStr) {
+    let temp = "", openBraces = 0;
 
     for(let i=0; i<cssStr.length; i++){
         var c = cssStr[i];
@@ -146,12 +164,23 @@ function CSStoJSON(cssstring) {
     if (cssStr.endsWith(",\"")) {
         cssStr = cssStr.substr(0, cssStr.length-2);
     }
-    return JSON.stringify(JSON.parse("{\""+cssStr+"}"), null, 2);
+    return JSON.stringify(JSON.parse("{\"" + cssStr + "}"), null, 2);
 }
 
+/*
+    Function to generate an HTML string from a WON-formatted JSON
+
+    @param json: a JSON (WON-formatted) object or string
+    @return: CSS string corresponding to the passed JSON
+*/
 function JSONtoCSS(json) {
     let cssString = "";
+    json = JSON.parse(json);
 
+    /*
+        Here I just build a CSS string iterating through each child of each key,
+        following basilar CSS rules
+    */
     for (key in json) {
         cssString += key + "{\n";
         for (style in json[key]) {
