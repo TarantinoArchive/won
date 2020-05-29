@@ -1,42 +1,6 @@
-#!/usr/bin/env node
 const htmlparser2 = require("htmlparser2");
-const fs = require("fs");
 
-// In case user uses only "won"
-if (process.argv.length<=2) {
-    console.log("Wrong usage of won. Type \"won --help\" for help.");
-    process.exit(0);
-}
-
-
-// Checking if user want to convert html to JSON
-if (process.argv.some((el) => el=="-hj")) {
-
-    // In case user uses only "won -j"
-    if (process.argv.length===3) {
-        console.log("Wrong usage of won. Type \"won --help\" for help.");
-        process.exit(0);
-    }
-
-    let fileToRead = process.argv[process.argv.indexOf("-hj")+1], fileOutput;
-
-    // Checking if user-specified file exists
-    fs.exists(fileToRead, exists => {
-        if (!exists) {
-            console.log("Error. No file in the specified path.");
-            process.exit(0);
-        }
-    });
-
-    // Checking if user want a custom output name
-    if (process.argv.some((el) => el=="-o")) {
-        if (process.argv.length-1==process.argv.indexOf("-o")) {
-            console.log("Wrong usage of -o. Type \"won --help\" for help.");
-            process.exit(0);
-        }
-        fileOutput = process.argv[process.argv.indexOf("-o")+1];
-    }
-
+function HTMLtoJSON(html) {
     let openedTags = [];
     let structure = {}, openTagStructure = {};
     let openTag = "", closedTag = "";
@@ -67,43 +31,11 @@ if (process.argv.some((el) => el=="-hj")) {
         }},
         { decodeEntities: true }
     );
-    
-    // Writing data to output file
-    fs.readFile(fileToRead, "utf-8", (err, data) => {
-        if (err) throw err;
-        parser.write(data.replace(/(\r\n|\n|\r)/gm, ""));
-        fs.writeFile(fileOutput ? fileOutput : "o.json", JSON.stringify(structure, null, 2), err => {
-            if (err) throw err;
-        });
-    });
-} 
-// Checking if the user want to convert json to html
-else if (process.argv.some((el) => el=="-jh")) {
+    parser.write(html.replace(/(\r\n|\n|\r)/gm, ""));
+    return JSON.stringify(structure, null, 2);
+}
 
-        // In case user uses only "won -j"
-        if (process.argv.length===3) {
-            console.log("Wrong usage of won. Type \"won --help\" for help.");
-            process.exit(0);
-        }
-    
-        let fileToRead = process.argv[process.argv.indexOf("-jh")+1], fileOutput;
-    
-        // Checking if user-specified file exists
-        fs.exists(fileToRead, exists => {
-            if (!exists) {
-                console.log("Error. No file in the specified path.");
-                process.exit(0);
-            }
-        });
-    
-        // Checking if user want a custom output name
-        if (process.argv.some((el) => el=="-o")) {
-            if (process.argv.length-1==process.argv.indexOf("-o")) {
-                console.log("Wrong usage of -o. Type \"won --help\" for help.");
-                process.exit(0);
-            }
-            fileOutput = process.argv[process.argv.indexOf("-o")+1];
-        }
+function JSONtoHTML(json) {
 
     /*
         Function to generate the tag and the text of the tag with the right attributes and indentation
@@ -124,12 +56,10 @@ else if (process.argv.some((el) => el=="-jh")) {
         else return indent + returnTag + ">\n";
     };
 
-
-    let obj = JSON.parse(fs.readFileSync(fileToRead, "utf-8"));
+    let obj = json;
     let currentObj = obj;
     let indentSpaces = "", htmlBody = "";
-    let lastKey = 0;
-    let oldObjs = [], lastKeys = [];
+    let oldObjs = [];
 
 
     /*
@@ -175,36 +105,11 @@ else if (process.argv.some((el) => el=="-jh")) {
             currentObj.children.splice(0, 1);
         }
     }
-    htmlBody += "</html>";
-    fs.writeFile(fileOutput ? fileOutput : "o.html", htmlBody, err => {
-        if (err) throw err;
-    });
-} else if (process.argv.some((el) => el=="-cj")) {
+    return htmlBody + "</html>";
+    
+}
 
-    if (process.argv.length===3) {
-        console.log("Wrong usage of won. Type \"won --help\" for help.");
-        process.exit(0);
-    }
-
-    let fileToRead = process.argv[process.argv.indexOf("-cj")+1], fileOutput;
-
-    // Checking if user-specified file exists
-    fs.exists(fileToRead, exists => {
-        if (!exists) {
-            console.log("Error. No file in the specified path.");
-            process.exit(0);
-        }
-    });
-
-    // Checking if user want a custom output name
-    if (process.argv.some((el) => el=="-o")) {
-        if (process.argv.length-1==process.argv.indexOf("-o")) {
-            console.log("Wrong usage of -o. Type \"won --help\" for help.");
-            process.exit(0)
-        }
-        fileOutput = process.argv[process.argv.indexOf("-o")+1];
-    }    
-
+function CSStoJSON(cssstring) {
     let cssStr = fs.readFileSync(fileToRead, "utf-8"), temp = "", openBraces = 0;
 
     for(let i=0; i<cssStr.length; i++){
@@ -241,50 +146,26 @@ else if (process.argv.some((el) => el=="-jh")) {
     if (cssStr.endsWith(",\"")) {
         cssStr = cssStr.substr(0, cssStr.length-2);
     }
-    cssStr = "{\""+cssStr+"}";
+    return JSON.stringify(JSON.parse("{\""+cssStr+"}"), null, 2);
+}
 
-    fs.writeFile(fileOutput ? fileOutput : "o.json", JSON.stringify(JSON.parse(cssStr), null, 2), err => {
-        // Here I Parse and then Stringify the JSON for verifying and for the correct indentation
-        if (err) throw err;
-    }); 
-} else if (process.argv.some((el) => el=="-jc")) {
+function JSONtoCSS(json) {
+    let cssString = "";
 
-    if (process.argv.length===3) {
-        console.log("Wrong usage of won. Type \"won --help\" for help.");
-        process.exit(0);
-    }
-
-    let fileToRead = process.argv[process.argv.indexOf("-jc")+1], fileOutput;
-
-    // Checking if user-specified file exists
-    fs.exists(fileToRead, exists => {
-        if (!exists) {
-            console.log("Error. No file in the specified path.");
-            process.exit(0);
-        }
-    });
-
-    // Checking if user want a custom output name
-    if (process.argv.some((el) => el=="-o")) {
-        if (process.argv.length-1==process.argv.indexOf("-o")) {
-            console.log("Wrong usage of -o. Type \"won --help\" for help.");
-            process.exit(0);
-        }
-        fileOutput = process.argv[process.argv.indexOf("-o")+1];
-    }    
-
-    let obj = JSON.parse(fs.readFileSync(fileToRead, "utf-8")), cssString = "";
-
-    for (key in obj) {
+    for (key in json) {
         cssString += key + "{\n";
-        for (style in obj[key]) {
-            cssString += style + ": " + obj[key][style] + ";\n"
+        for (style in json[key]) {
+            cssString += style + ": " + json[key][style] + ";\n"
         }
         cssString += "}\n";
     }
-
-    fs.writeFile(fileOutput ? fileOutput : "o.css", cssString, err => {
-        if (err) throw err;
-    })
-    
+    return cssString;
 }
+
+
+module.exports = {
+    "JSONtoHTML": JSONtoHTML,
+    "JSONtoCSS": JSONtoCSS,
+    "HTMLtoJSON": HTMLtoJSON,
+    "CSStoJSON": CSStoJSON
+};

@@ -2,13 +2,13 @@
   "name": "won",
   "version": "1.0.0",
   "description": "A new standard for Web Development",
-  "main": "index.js",
+  "main": "won.js",
   "scripts": {
-    "test": "node index.js -jc main.json -o main.css",
-    "start": "node index.js"
+    "test": "",
+    "start": "node won.js"
   },
   "bin": {
-    "won": "index.js"
+    "won": "cli.js"
   },
   "keywords": [
     "js",
@@ -22,8 +22,12 @@
     "css"
   ],
   "author": "@GianlucaTarantino",
-  "license": "ISC",
+  "license": "GNU GPLv3",
   "dependencies": {
     "htmlparser2": "^4.1.0"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/GianlucaTarantino/won.git"
   }
 }
