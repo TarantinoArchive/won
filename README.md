@@ -20,7 +20,7 @@ Using `won -hj pathToFile.html` you will get a JSON output file, structured like
 - Installing to PATH via NPM (❎)
 - Adding help in CLI (❎)
 - CSS to JSON (✅)
-- JSON to CSS (❎)
+- JSON to CSS (✅)
 - JavaScript binding (❎)
 - Other Languages binding (🔜)
 
