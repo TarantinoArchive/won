@@ -205,11 +205,9 @@ else if (process.argv.some((el) => el=="-jh")) {
         fileOutput = process.argv[process.argv.indexOf("-o")+1];
     }    
 
-    cssStr = fs.readFileSync(fileToRead, "utf-8")
+    let cssStr = fs.readFileSync(fileToRead, "utf-8"), temp = "", openBraces = 0;
 
-    var temp="";
-    var openBraces=0;
-    for(var i=0; i<cssStr.length; i++){
+    for(let i=0; i<cssStr.length; i++){
         var c = cssStr[i];
         if (c == "{") {
             openBraces++;
@@ -223,20 +221,20 @@ else if (process.argv.some((el) => el=="-jh")) {
             temp += c;
         }
     }
-    cssStr=temp;
-    cssStr=cssStr.split("\"").join("'");
-    cssStr=cssStr.split(" ").join("_SPACE_");
-    cssStr=cssStr.split("\r").join("");
-    cssStr=cssStr.split("\n").join("");
-    cssStr=cssStr.split("\t").join("");
-    cssStr=cssStr.split("}").join("\"}####\"");
-    cssStr=cssStr.split(";\"").join("\"");
-    cssStr=cssStr.split(":").join("\":\"");
-    cssStr=cssStr.split("{").join("\":{\"");
-    cssStr=cssStr.split(";").join("\",\"");
-    cssStr=cssStr.split("####").join(",");
-    cssStr=cssStr.split("_--_").join(":");
-    cssStr=cssStr.split("_SPACE_").join(" ");
+    cssStr = temp;
+    cssStr = cssStr.split("\"").join("'");
+    cssStr = cssStr.split(" ").join("_SPACE_");
+    cssStr = cssStr.split("\r").join("");
+    cssStr = cssStr.split("\n").join("");
+    cssStr = cssStr.split("\t").join("");
+    cssStr = cssStr.split("}").join("\"}####\"");
+    cssStr = cssStr.split(";\"").join("\"");
+    cssStr = cssStr.split(":").join("\":\"");
+    cssStr = cssStr.split("{").join("\":{\"");
+    cssStr = cssStr.split(";").join("\",\"");
+    cssStr = cssStr.split("####").join(",");
+    cssStr = cssStr.split("_--_").join(":");
+    cssStr = cssStr.split("_SPACE_").join(" ");
     if (cssStr.endsWith(",")) {
         cssStr = cssStr.substr(0, cssStr.length-1);
     }
