@@ -3,7 +3,7 @@
 ![](/assets/wonlogo.png)
 ## What is WON? Why does it exists?
 Won is a multi purpose HTML/CSS to JSON (and vice-versa) converting tool. It is very useful for various applications in the field of web development, for example it helps a lot in web pages parsing and modification in some tedious languages like C, because all you have to do is use an easy JSON.
-I made WON because recently, while making a web scraping project with C++, I noticed that in languages like this is very difficult to get a code (and human) friendly representation of an HTML page.
+I made WON because recently, while making a web scraping project with C++, I noticed that in languages like this is very difficult to get a code (and human) friendly representation of an HTML page. (It is also my very first Open Source Project!)
 ### How is it made?
 It is currently made in Node.JS, using [htmlparser2](https://www.npmjs.com/package/htmlparser2) (go check their [repo](https://github.com/fb55/htmlparser2), this is an awesome Node Package) because this was the fastest implementation for HTML parsing on the NPM scenario.
 ###
@@ -24,6 +24,7 @@ Using `won -hj pathToFile.html` you will get a JSON output file, structured like
 - JSON to CSS (✅)
 - JavaScript binding (✅)
 - Other Languages binding (🔜)
+- Tools using WON (🔜)
 
 ## How to install
 Currently, is supported manual installation, and NPM installation.
