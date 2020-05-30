@@ -7,8 +7,8 @@ I made WON because recently, while making a web scraping project with C++, I not
 
 ## Table of Contents
 1. [How is it made](#how-is-it-made)
-2. [How does it works (CLI)](#how-does-it-works-(CLI))
-3. [How does it works (JS)](#how-does-it-works-(JS))
+2. [How does it works (CLI)](#how-does-cli-works)
+3. [How does it works (JS)](#how-does-js-binding-works)
 4. [Comparison](#comparison)
 5. [Features](#features)
 6. [How to install](#how-to-install)
@@ -18,12 +18,12 @@ I made WON because recently, while making a web scraping project with C++, I not
 It is currently made in Node.JS, using [htmlparser2](https://www.npmjs.com/package/htmlparser2) (go check their [repo](https://github.com/fb55/htmlparser2), this is an awesome Node Package) because this was the fastest implementation for HTML parsing on the NPM scenario.
 
 (For the CSS Parsing I was struggling a bit, then I found an [answer](https://stackoverflow.com/questions/5240778/css-to-json-parser-or-converter/60451920#60451920) on Stack Overflow with a pretty decent already made algorithm for CSS parsing, so I said "Why not?". I just increased the readability of the code, but the algorithm is took from that answer.)
-### How does it works (CLI)
+### How does CLI works
 It is currently a CLI utility and a JS library. Alongside the JS version, other languages binding will be developed.
 
 Using `won -hj pathToFile.html` you will get a JSON output file, structured like a valid WON Object. Using `won -jh pathToFile.json` you will get a HTML file. Same for CSS, but use a `c` instead of the `h` (example: `won -cj pathToFile.css`). Add `-o outputName.o` to determine a name for the output file.
 
-### How does it works (JS)
+### How does JS binding works
 Alongside the JS version, other languages binding will be developed.
 
 **Example code**
