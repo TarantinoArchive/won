@@ -1,0 +1,37 @@
+{
+  "name": "html",
+  "attributes": {},
+  "children": [
+    {
+      "name": "head",
+      "attributes": {},
+      "children": [
+        {
+          "name": "title",
+          "attributes": {},
+          "children": [],
+          "text": "title"
+        }
+      ], 
+      "text": ""
+    },
+    {
+      "name": "body",
+      "attributes": {
+        "style": "background-color: aliceblue;"
+      },
+      "children": [
+        {
+          "name": "a",
+          "attributes": {
+            "href": "example.com"
+          },
+          "children": [],
+          "text": "This is a link!"
+        }
+      ],
+      "text": ""
+    }
+  ],
+  "text": ""
+}

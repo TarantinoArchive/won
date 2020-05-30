@@ -1,6 +1,6 @@
 # WON
 ## Web Object Notation
-![](/assets/wonlogo.png)
+![ ](/assets/wonlogo.png)
 ## What is WON? Why does it exists?
 Won is a multi purpose HTML/CSS to JSON (and vice-versa) converting tool. It is very useful for various applications in the field of web development, for example it helps a lot in web pages parsing and modification in some tedious languages like C, because all you have to do is use an easy JSON.
 I made WON because recently, while making a web scraping project with C++, I noticed that in languages like this is very difficult to get a code (and human) friendly representation of an HTML page. (It is also my very first Open Source Project!)
@@ -12,6 +12,12 @@ It is currently made in Node.JS, using [htmlparser2](https://www.npmjs.com/packa
 It is currently a CLI utility and a JS library. Alongside the JS version, other languages binding will be developed.
 
 Using `won -hj pathToFile.html` you will get a JSON output file, structured like a valid WON Object. Using `won -jh pathToFile.json` you will get a HTML file. Same for CSS, but use a `c` instead of the `h` (example: `won -cj pathToFile.css`). Add `-o outputName.o` to determine a name for the output file.
+### Comparison
+
+HTML  | JSON
+:----:|:-----:
+![ ](./assets/exampleHTML.png) | ![ ](./assets/exampleJSON.png)
+
 ## Features
 
 (✅) Done | (❎) Work in Progress | (🔜) Will soon be WIP
