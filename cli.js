@@ -4,15 +4,14 @@ const fs = require("fs");
 const won = require("./won.js");
 
 if (process.argv.some(el => el=="--help")) {
-    console.log("Won stands for \"Web Object Notation\" and this CLI is a \
-fast tool to do convertion between HTML, CSS and JSON.\n\n\
-Usage: \n\
-`-jh <filepath>` to convert from JSON to HTML\n\
-`-hj <filepath>` to convert from HTML to JSON\n\
-`-cj <filepath>` to convert from CSS to JSON\n\
-`-jc <filepath>` to convert from JSON to CSS\n\
-`-o <filepath>` to specify an output name for the file\n\n\
-Support: https://github.com/GianlucaTarantino/won");
+    console.log(`Won stands for \"Web Object Notation\" and this CLI is a fast tool to do convertion between HTML, CSS and JSON.\n
+    Usage: 
+    \`-jh <filepath>\` to convert from JSON to HTML
+    \`-hj <filepath>\` to convert from HTML to JSON
+    \`-cj <filepath>\` to convert from CSS to JSON
+    \`-jc <filepath>\` to convert from JSON to CSS
+    \`-o <filepath>\` to specify an output name for the file\n
+    Support: https://github.com/GianlucaTarantino/won`);
     process.exit(0);
 }
 
@@ -52,7 +51,6 @@ switch (acceptedArgs[mainArg]) {
         break;
     default:
         throw "Unknown Error.";
-        break;
 }
 
 if (process.argv.some((el) => el=="-o")) {
@@ -65,4 +63,4 @@ if (process.argv.some((el) => el=="-o")) {
 
 fs.writeFile(fileOutput, outputContent, err => {
     if (err) throw "Error: " + err;
-})
+});
