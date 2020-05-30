@@ -23,9 +23,6 @@ It is currently a CLI utility and a JS library. Alongside the JS version, other 
 
 Using `won -hj pathToFile.html` you will get a JSON output file, structured like a valid WON Object. Using `won -jh pathToFile.json` you will get a HTML file. Same for CSS, but use a `c` instead of the `h` (example: `won -cj pathToFile.css`). Add `-o outputName.o` to determine a name for the output file.
 
-### How does it works (CLI)
-Using `won -hj pathToFile.html` you will get a JSON output file, structured like a valid WON Object. Using `won -jh pathToFile.json` you will get a HTML file. Same for CSS, but use a `c` instead of the `h` (example: `won -cj pathToFile.css`). Add `-o outputName.o` to determine a name for the output file.
-
 ### How does it works (JS)
 Alongside the JS version, other languages binding will be developed.
 
