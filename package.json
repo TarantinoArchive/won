@@ -27,7 +27,7 @@
     "htmlparser2": "^4.1.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/GianlucaTarantino/won.git"
+    "type": "git",
+    "url": "https://github.com/GianlucaTarantino/won.git"
   }
 }
