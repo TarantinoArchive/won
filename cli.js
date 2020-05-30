@@ -5,14 +5,15 @@ const won = require("./won.js");
 
 if (process.argv.some(el => el=="--help")) {
     console.log("Won stands for \"Web Object Notation\" and this CLI is a \
-                fast tool to do convertion between HTML, CSS and JSON.\n\n\
-                Usage: \n\
-                `-jh <filepath>` to convert from JSON to HTML\n\
-                `-hj <filepath>` to convert from HTML to JSON\n\
-                `-cj <filepath>` to convert from CSS to JSON\n\
-                `-jc <filepath>` to convert from JSON to CSS\n\
-                `-o <filepath>` to specify an output name for the file\n\n\
-                Support: https://github.com/GianlucaTarantino/won");
+fast tool to do convertion between HTML, CSS and JSON.\n\n\
+Usage: \n\
+`-jh <filepath>` to convert from JSON to HTML\n\
+`-hj <filepath>` to convert from HTML to JSON\n\
+`-cj <filepath>` to convert from CSS to JSON\n\
+`-jc <filepath>` to convert from JSON to CSS\n\
+`-o <filepath>` to specify an output name for the file\n\n\
+Support: https://github.com/GianlucaTarantino/won");
+    process.exit(0);
 }
 
 // In case user uses only "won"
