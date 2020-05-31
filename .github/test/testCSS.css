@@ -4,6 +4,7 @@ main {
 .main {
     border-inline-end-width: inherit;
     display: grid;
+    display: inherit;
 }
 div.main {
     border: inherit;

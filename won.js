@@ -128,43 +128,39 @@ function JSONtoHTML(json) {
     @return: JSON string (WON-formatted) corresponding to the cssStr passed
 */
 function CSStoJSON(cssStr) {
-    let temp = "", openBraces = 0;
 
-    for(let i=0; i<cssStr.length; i++){
-        var c = cssStr[i];
-        if (c == "{") {
-            openBraces++;
+    let openBrace = false, currentKey = "", returnObj = {};
+
+    // Formatting eventual single-line CSS string to a multiline CSS string
+    cssStr.replace(";", ";\n");
+    cssStr.replace("{", "{\n");
+    cssStr.replace("}", "}\n");
+
+    // Iterating through each line of the CSS document
+    for (let line of cssStr.split(/\r?\n/)) {
+        if (openBrace) {
+            if (line.indexOf("}") >= 0) {
+                openBrace = false;
+                currentKey = "";
+            }
+            else if (line.indexOf(":" >= 0)) {
+                let splittedString = line.split(":");
+                if (returnObj[currentKey][splittedString[0].replace(/\s/g,'')]) {
+                    returnObj[currentKey][splittedString[0].replace(/\s/g,'')].push(splittedString[1].replace(/\s/g,'').replace(";", ""));
+                }
+                else {
+                    returnObj[currentKey][splittedString[0].replace(/\s/g,'')] = [splittedString[1].replace(/\s/g,'').replace(";", "")];
+                }
+            }
         }
-        else if (c == "}") {
-            openBraces--;
-        }
-        if (openBraces == 0 && c == ":") {
-            temp += "_--_";
-        } else {
-            temp += c;
+        else if (line.indexOf("{")>=0) {
+            currentKey = line.split("{")[0].replace(/\s/g,'');
+            returnObj[currentKey] = {};
+            openBrace = true;
         }
     }
-    cssStr = temp;
-    cssStr = cssStr.split("\"").join("'");
-    cssStr = cssStr.split(" ").join("_SPACE_");
-    cssStr = cssStr.split("\r").join("");
-    cssStr = cssStr.split("\n").join("");
-    cssStr = cssStr.split("\t").join("");
-    cssStr = cssStr.split("}").join("\"}####\"");
-    cssStr = cssStr.split(";\"").join("\"");
-    cssStr = cssStr.split(":").join("\":\"");
-    cssStr = cssStr.split("{").join("\":{\"");
-    cssStr = cssStr.split(";").join("\",\"");
-    cssStr = cssStr.split("####").join(",");
-    cssStr = cssStr.split("_--_").join(":");
-    cssStr = cssStr.split("_SPACE_").join(" ");
-    if (cssStr.endsWith(",")) {
-        cssStr = cssStr.substr(0, cssStr.length-1);
-    }
-    if (cssStr.endsWith(",\"")) {
-        cssStr = cssStr.substr(0, cssStr.length-2);
-    }
-    return JSON.stringify(JSON.parse("{\"" + cssStr + "}"), null, 2);
+    console.log(returnObj);
+    return JSON.stringify(returnObj, null, 2);
 }
 
 /*
@@ -181,10 +177,12 @@ function JSONtoCSS(json) {
         Here I just build a CSS string iterating through each child of each key,
         following basilar CSS rules
     */
-    for (key in json) {
-        cssString += key + "{\n";
-        for (style in json[key]) {
-            cssString += style + ": " + json[key][style] + ";\n"
+    for (let key in json) {
+        cssString += key + " {\n";
+        for (let style in json[key]) {
+            for (let styleInfo in json[key][style]) {
+                cssString += "  " + style + ": " + json[key][style][styleInfo] + ";\n";
+            }
         }
         cssString += "}\n";
     }
